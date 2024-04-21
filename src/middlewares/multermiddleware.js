@@ -4,11 +4,9 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     const fileType = file.mimetype;
 
-    console.log(req.params.type)
-
-    if (req.params.type === 'profile') {
+    if (file.fieldname === 'profile') {
       cb(null, `${__dirname}/public/uploads/profile`);
-    } else if (req.params.type === 'product') {
+    } else if (file.fieldname === 'product') {
       cb(null, `${__dirname}/public/uploads/products`);
     }
     else {

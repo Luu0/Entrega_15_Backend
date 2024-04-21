@@ -9,9 +9,9 @@ router.get("/allusers",getAllUsers)
 
 router.get("/find/:uid",getUserByIdController)
 
-router.get("/premium/:uid", authMiddlewareAdmin, MakeUserPremium)
+router.get("/premium/:uid", authMiddlewareUser, upload.array("documents"), MakeUserPremium)
 
-router.post('/:uid/documents',upload.array("profile"),UploadDocument)
+router.post('/:uid/documents',upload.array("document"),UploadDocument)
 
 router.get("/login", (req,res)=>{
     res.render('login')

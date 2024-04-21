@@ -40,10 +40,22 @@ export const getUserByIdController = async (req, res) => {
 };
 
 
-export const MakeUserPremium = async (req, res)=>{
+export const MakeUserPremium =  async (req, res)=>{
   try{
     const userId = req.params.uid;
     const user = await FindById(userId);
+
+    if (!req.files || req.files.length !== 3) {
+      return res.status(400).send({ status: "error", message: "You must attach exactly 3 files" });
+    }
+
+    const documents = req.files.map(file => ({
+      name: file.filename,
+      reference: file.path
+    }));
+    
+    user.documents = [...user.documents, ...documents];
+
     if (!user) {
       return res.status(404).send("User not found");
     }
